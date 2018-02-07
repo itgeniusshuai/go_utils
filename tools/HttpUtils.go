@@ -11,7 +11,7 @@ import (
 
 func Get(url string, params map[string]string, headers map[string]string) (string,error){
 	if "" == url {
-		return nil,errors.New("Url can not be nil or empty string")
+		return "",errors.New("Url can not be nil or empty string")
 	}
 	if params != nil && len(params) > 0{
 		var paramArr []string
@@ -24,7 +24,7 @@ func Get(url string, params map[string]string, headers map[string]string) (strin
 	request,err := http.NewRequest("GET",url,nil)
 	if err != nil{
 		fmt.Println("Create get request failed err is ",err.Error() )
-		return nil,err
+		return "",err
 	}
 	if headers != nil && len(headers) > 0{
 		for k,v := range headers{
@@ -34,24 +34,24 @@ func Get(url string, params map[string]string, headers map[string]string) (strin
 	response,err := client.Do(request)
 	if err != nil{
 		fmt.Println("Do get request failed err is ",err.Error() )
-		return nil,err
+		return "",err
 	}
 	if response.StatusCode == 200{
 		body,err := ioutil.ReadAll(response.Body)
 		if err != nil{
 			fmt.Println("Create post request failed err is ",err.Error() )
-			return nil,err
+			return "",err
 		}
 		bodyStr := string(body)
 		return bodyStr,nil
 	}else{
-		return nil,errors.New("Failed status code is "+string(response.StatusCode))
+		return "",errors.New("Failed status code is "+string(response.StatusCode))
 	}
 }
 
 func Post(url string, params map[string]string, headers map[string]string) (string,error){
 	if "" == url {
-		return nil,errors.New("Url can not be nil or empty string")
+		return "",errors.New("Url can not be nil or empty string")
 	}
 	var requestBody string
 	if params != nil && len(params) > 0{
@@ -62,7 +62,7 @@ func Post(url string, params map[string]string, headers map[string]string) (stri
 	request,err := http.NewRequest("POST",url,strings.NewReader(requestBody))
 	if err != nil{
 		fmt.Println("Create post request failed err is ",err.Error() )
-		return nil,err
+		return "",err
 	}
 	if headers != nil && len(headers) > 0{
 		for k,v := range headers{
@@ -72,17 +72,17 @@ func Post(url string, params map[string]string, headers map[string]string) (stri
 	response,err := client.Do(request)
 	if err != nil{
 		fmt.Println("Do post request failed err is ",err.Error() )
-		return nil,err
+		return "",err
 	}
 	if response.StatusCode == 200{
 		body,err := ioutil.ReadAll(response.Body)
 		if err != nil{
 			fmt.Println("Read response body failed err is ",err.Error() )
-			return nil,err
+			return "",err
 		}
 		bodyStr := string(body)
 		return bodyStr,nil
 	}else{
-		return nil,errors.New("Failed status code is "+string(response.StatusCode))
+		return "",errors.New("Failed status code is "+string(response.StatusCode))
 	}
 }
