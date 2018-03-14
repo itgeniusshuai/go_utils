@@ -26,17 +26,36 @@ func RemoveDuplicatesAndEmpty(a []string) (ret []string){
 	return
 }
 
-func GetString(v interface{}) string{
+func GetString(v interface{})string{
 	var result string
 	switch v := v.(type) {
+	case uint:
+		result = strconv.Itoa(int(v))
+	case uint8:
+		result = strconv.Itoa(int(v))
+	case uint32:
+		result = strconv.Itoa(int(v))
+	case uint64:
+		result = strconv.Itoa(int(v))
 	case int:
-		result = string(v)
+		result = strconv.Itoa(v)
 	case int8:
 		result = strconv.Itoa(int(v))
 	case int32:
 		result = strconv.Itoa(int(v))
 	case int64:
 		result = strconv.Itoa(int(v))
+	case string:
+		result = v
+	case float32:
+		result = strconv.FormatFloat(float64(v),'E', -1, 64)
+	case float64:
+		result = strconv.FormatFloat(v,'E', -1, 64)
+	default:
+		result = fmt.Sprintf("%v",v)
+		if result == "<nil>"{
+			result = ""
+		}
 	}
 	return result
 }
