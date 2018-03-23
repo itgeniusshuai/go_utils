@@ -1,5 +1,7 @@
-
-
+import (
+	"crypto/tls"
+	"gopkg.in/gomail.v2"
+)
 func SendSmtpEmail(from string, to []string,subject string,content string,cc []string,bcc []string){
 	m := gomail.NewMessage()
 	m.SetHeader("From", from)
@@ -7,7 +9,7 @@ func SendSmtpEmail(from string, to []string,subject string,content string,cc []s
 	m.SetHeader("Cc", cc...)
 	m.SetHeader("Subject", subject)
 	m.SetBody("text/html", content)
-	d := gomail.NewDialer("smtp.qq.com", 465,"xxxxxxxxx@qq.com","xxxxxxxxxx")
+	d := gomail.NewDialer("smtp.qq.com", 465,"245956927@qq.com","orvxhhcrfhqqbjhg")
 	d.TLSConfig = &tls.Config{InsecureSkipVerify: true}
 	if err := d.DialAndSend(m); err != nil {
 		panic(err)
