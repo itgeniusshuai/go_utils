@@ -91,4 +91,32 @@ func DistinctByCircle(arr []string ) []string{
 	}
 	return tmpArr
 }
-
+// 比较两个类型元素是否相等
+func Compare(base interface{}, target interface{}) bool{
+	// 先比较类型
+	baseType := reflect.TypeOf(base)
+	targetType := reflect.TypeOf(target)
+	if targetType.String() != baseType.String(){
+		return false
+	}
+	// 再比较值
+	switch base := base.(type) {
+	case []uint8:
+		// 比较长度
+		targetObj := target.([]uint8)
+		if len(base) != len(targetObj){
+			return false
+		}
+		// 遍历匹配元素
+		for i,e := range base{
+			if e != targetObj[i]{
+				return false
+			}
+		}
+		return true
+	case string:
+		return base == target
+	default:
+		return base == target
+	}
+}
